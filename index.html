@@ -3,821 +3,185 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="eCoins Estate: buy, hold and send crypto in rands. Concept demo.">
-<title>eCoins Estate</title>
+<meta name="description" content="eCoins Estate demo account: trade crypto in rands with R100 000 of demo funds and live market prices.">
+<title>eCoins Estate · Demo account</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: sticky nav, hero = pitch + guided tour beside a live phone prototype, then a single reading column of sections. */
-:root {
-  --bg: #F2F4F1;
-  --surface: #FFFFFF;
-  --sunk: #E7EBE6;
-  --ink: #12302B;
-  --muted: #56685F;
-  --line: #D3DAD3;
-  --gold: #A9741A;
-  --gold-soft: #F3E6CC;
-  --deep: #12302B;
-  --on-deep: #F2F4F1;
-  --good: #1E7A4C;
-  --bad: #B3362C;
-  --warn-bg: #FBEBD3;
-  --warn-ink: #7A4B05;
-  --bad-bg: #F8E0DD;
-  --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0C1714; --surface: #14231F; --sunk: #0F1C19; --ink: #E4ECE7; --muted: #94A79D; --line: #253731;
-    --gold: #E2B357; --gold-soft: #3A2E17; --deep: #1B2F2A; --on-deep: #E4ECE7;
-    --good: #4CC086; --bad: #F07A6E; --warn-bg: #3A2C12; --warn-ink: #F2CB85; --bad-bg: #3A1C19;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0C1714; --surface: #14231F; --sunk: #0F1C19; --ink: #E4ECE7; --muted: #94A79D; --line: #253731;
-  --gold: #E2B357; --gold-soft: #3A2E17; --deep: #1B2F2A; --on-deep: #E4ECE7;
-  --good: #4CC086; --bad: #F07A6E; --warn-bg: #3A2C12; --warn-ink: #F2CB85; --bad-bg: #3A1C19;
-  color-scheme: dark;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.12; margin: 0; letter-spacing: -0.01em; }
-p { margin: 0; }
-a { color: inherit; }
-button { font: inherit; color: inherit; cursor: pointer; }
-:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-img { max-width: 100%; }
-[hidden] { display: none !important; }
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.mono, .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-
-/* nav */
-.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.nav .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; flex-wrap: wrap; }
-.brand { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 700; font-size: 18px; text-decoration: none; }
-.coin { width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: var(--bg); display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: 13px; box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--gold) 60%, var(--bg)); }
-.nav-links { display: flex; gap: 4px 18px; flex-wrap: wrap; margin-left: auto; font-size: 14px; }
-.nav-links a { text-decoration: none; color: var(--muted); }
-.nav-links a:hover { color: var(--ink); }
-.badge { display: inline-block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--gold-soft); color: var(--warn-ink); }
-
-/* hero */
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 48px; padding-block: 48px 64px; align-items: start; }
-.hero h1 { font-size: clamp(34px, 5vw, 54px); font-weight: 700; margin-block: 14px 16px; }
-.hero h1 em { font-style: normal; color: var(--gold); }
-.lede { font-size: 18px; color: var(--muted); max-width: 34em; }
-.tour { margin-top: 32px; display: grid; gap: 8px; }
-.tour-head { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
-.tour button { display: grid; grid-template-columns: 28px minmax(0,1fr); gap: 12px; text-align: left; background: transparent; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; transition: border-color .15s, background .15s; }
-.tour button:hover { border-color: var(--gold); }
-.tour button[aria-current="true"] { background: var(--surface); border-color: var(--gold); }
-.tour .n { font-family: var(--f-mono); color: var(--gold); font-weight: 500; padding-top: 1px; }
-.tour b { display: block; font-weight: 600; }
-.tour span.d { color: var(--muted); font-size: 14px; }
-
-/* phone */
-.phone-col { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); }
-.phone { width: 100%; max-width: 390px; height: 760px; border-radius: 40px; background: var(--deep); padding: 10px; box-shadow: 0 30px 60px -30px rgba(10, 30, 25, .45); }
-.screen { height: 100%; border-radius: 31px; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; position: relative; }
-.status { display: flex; justify-content: space-between; padding: 12px 22px 4px; font-size: 12px; font-weight: 600; font-family: var(--f-mono); }
-.view { flex: 1; overflow-y: auto; padding: 8px 18px 18px; display: flex; flex-direction: column; gap: 14px; }
-.tabs { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); background: var(--surface); padding: 6px 4px 12px; }
-.tabs button { background: none; border: 0; display: grid; justify-items: center; gap: 2px; font-size: 11px; color: var(--muted); padding: 4px 0; }
-.tabs button[aria-current="true"] { color: var(--ink); font-weight: 600; }
-.tabs svg { width: 22px; height: 22px; }
-.phone-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 10px; }
-
-/* app parts */
-.row { display: flex; align-items: center; gap: 10px; }
-.between { justify-content: space-between; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
-.big { font-family: var(--f-display); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.sub { color: var(--muted); font-size: 13px; }
-.up { color: var(--good); } .down { color: var(--bad); }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 11px; font-size: 13px; }
-.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.act { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 0 8px; display: grid; justify-items: center; gap: 4px; font-size: 12px; font-weight: 500; }
-.act .ic { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold-soft); color: var(--warn-ink); font-size: 16px; font-weight: 700; }
-.list { display: grid; }
-.li { display: grid; grid-template-columns: 34px minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); background: none; border-left: 0; border-right: 0; border-top: 0; text-align: left; width: 100%; }
-.li:last-child { border-bottom: 0; }
-.tok { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-mono); font-size: 10px; font-weight: 500; color: #fff; }
-.li .r { text-align: right; font-family: var(--f-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
-.btn { border: 0; border-radius: 14px; padding: 13px 16px; font-weight: 600; background: var(--ink); color: var(--bg); width: 100%; }
-.btn.gold { background: var(--gold); color: #1A1306; }
-.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-.btn:disabled { opacity: .4; cursor: not-allowed; }
-.field { display: grid; gap: 6px; }
-.field label { font-size: 13px; font-weight: 600; }
-.input { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 11px 12px; font: inherit; color: var(--ink); }
-.amount-in { font-family: var(--f-display); font-size: 40px; font-weight: 700; border: 0; background: transparent; width: 100%; text-align: center; color: var(--ink); padding: 0; }
-.kv { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 6px 10px; font-size: 13px; }
-.kv dt { color: var(--muted); } .kv dd { margin: 0; text-align: right; font-family: var(--f-mono); }
-.kv .tot { font-weight: 600; color: var(--ink); border-top: 1px solid var(--line); padding-top: 6px; }
-.note { border-radius: 12px; padding: 10px 12px; font-size: 13px; background: var(--sunk); color: var(--muted); }
-.note.warn { background: var(--warn-bg); color: var(--warn-ink); }
-.note.bad { background: var(--bad-bg); color: var(--bad); }
-.note b { color: inherit; }
-.progress { height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
-.progress i { display: block; height: 100%; background: var(--gold); transition: width .3s; }
-.back { background: none; border: 0; padding: 0; color: var(--muted); font-size: 14px; display: inline-flex; gap: 6px; align-self: flex-start; }
-.h { font-family: var(--f-display); font-size: 22px; font-weight: 700; }
-canvas.chart { width: 100%; height: 130px; display: block; }
-.msg { max-width: 82%; padding: 9px 12px; border-radius: 14px; font-size: 13.5px; }
-.msg.them { background: var(--surface); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 4px; }
-.msg.me { background: var(--ink); color: var(--bg); align-self: flex-end; border-bottom-right-radius: 4px; }
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; font-size: 11px; color: var(--muted); }
-.steps div { border-top: 3px solid var(--line); padding-top: 4px; }
-.steps div.on { border-color: var(--gold); color: var(--ink); font-weight: 600; }
-.toggle { width: 42px; height: 24px; border-radius: 12px; background: var(--line); border: 0; position: relative; flex: none; }
-.toggle::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--surface); transition: left .15s; }
-.toggle[aria-pressed="true"] { background: var(--good); }
-.toggle[aria-pressed="true"]::after { left: 21px; }
-.ob { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; font-family: var(--f-mono); font-size: 12px; }
-.ob div { display: flex; justify-content: space-between; padding: 2px 0; }
-.welcome { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; padding: 24px 22px 28px; background: var(--deep); color: var(--on-deep); }
-.welcome h2 { font-size: 32px; }
-.welcome p { color: color-mix(in srgb, var(--on-deep) 75%, transparent); }
-.welcome .btn.ghost { color: var(--on-deep); border-color: color-mix(in srgb, var(--on-deep) 30%, transparent); }
-.rings { position: absolute; inset: 0 0 auto; height: 50%; overflow: hidden; pointer-events: none; }
-.toast { position: absolute; left: 14px; right: 14px; bottom: 76px; background: var(--ink); color: var(--bg); padding: 10px 14px; border-radius: 12px; font-size: 13px; }
-
-/* sections */
-section.block { border-top: 1px solid var(--line); }
-section.block .wrap { padding-block: 64px; }
-.eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
-section h2 { font-size: clamp(26px, 3.4vw, 36px); margin-bottom: 14px; max-width: 22em; }
-.intro { color: var(--muted); max-width: 40em; font-size: 16.5px; }
-.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 28px; margin-top: 36px; }
-.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; margin-top: 36px; }
-.pillar h3 { font-size: 19px; margin-bottom: 8px; }
-.pillar p { color: var(--muted); }
-.pillar .k { font-family: var(--f-mono); font-size: 12px; color: var(--gold); margin-bottom: 8px; display: block; }
-.tbl-wrap { overflow-x: auto; margin-top: 32px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
-th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; background: var(--sunk); }
-tr:last-child td { border-bottom: 0; }
-td .src { display: block; font-size: 12px; color: var(--muted); margin-top: 4px; }
-.flow { margin-top: 32px; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-.journey { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 0; counter-reset: j; }
-.journey li { display: grid; grid-template-columns: 44px minmax(0,1fr); gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); counter-increment: j; }
-.journey li::before { content: counter(j, decimal-leading-zero); font-family: var(--f-mono); color: var(--gold); font-weight: 500; }
-.journey b { display: block; }
-.journey span { color: var(--muted); }
-.phase { border-left: 3px solid var(--line); padding: 2px 0 2px 18px; }
-.phase.now { border-color: var(--gold); }
-.phase h3 { font-size: 18px; margin-bottom: 8px; }
-.phase ul { margin: 0; padding-left: 18px; color: var(--muted); display: grid; gap: 4px; }
-.phase .when { font-family: var(--f-mono); font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
-
-/* feedback */
-.fb { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 32px; margin-top: 32px; align-items: start; }
-.fb form { display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
-.fb select, .fb textarea { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 10px 12px; font: inherit; color: var(--ink); }
-.fb textarea { min-height: 96px; resize: vertical; }
-.stars { display: flex; gap: 6px; }
-.stars button { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font-family: var(--f-mono); }
-.stars button[aria-pressed="true"] { background: var(--gold); color: #1A1306; border-color: var(--gold); }
-.fb-list { display: grid; gap: 12px; }
-.fb-item { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; background: var(--surface); }
-.fb-item .meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-.fb-item .area { font-weight: 600; color: var(--ink); }
-.fb-item p { white-space: pre-wrap; overflow-wrap: anywhere; }
-.empty { border: 1px dashed var(--line); border-radius: 14px; padding: 22px; color: var(--muted); }
-footer .wrap { padding-block: 32px 48px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
-
-@media (max-width: 900px) {
-  .hero .wrap { grid-template-columns: minmax(0,1fr); gap: 32px; }
-  .phone-col { position: static; order: -1; justify-self: center; width: 100%; max-width: 390px; }
-  .grid3, .grid2, .fb { grid-template-columns: minmax(0,1fr); }
-}
-@media (max-width: 440px) { .phone { height: 700px; border-radius: 32px; padding: 7px; } .screen { border-radius: 26px; } }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
+<div class="ribbon">
+  <span><b>Demo account.</b> Funds are simulated and prices are live. No real money moves.</span>
+  <a href="about.html">Read the concept →</a>
+</div>
 
-
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="#top"><span class="coin">eC</span>eCoins Estate</a>
-    <span class="badge">Concept demo · not live</span>
-    <nav class="nav-links" aria-label="Sections">
-      <a href="#idea">The idea</a>
-      <a href="#how">How it works</a>
-      <a href="#research">What users told us</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#feedback">Give feedback</a>
-    </nav>
+<header class="top">
+  <a class="brand" href="#dashboard"><span class="coin">eC</span><span class="brand-name">eCoins Estate</span></a>
+  <div class="ticker" id="ticker" aria-label="Market prices"></div>
+  <div class="top-right">
+    <span class="feed" id="feed" title="Market data source"><i></i><span>Connecting…</span></span>
+    <div class="bal-pill" id="bal-pill"><span class="lbl">Demo balance</span><b class="num" id="top-total">—</b></div>
+    <button class="ghost-btn" id="btn-tour">Tour</button>
+    <button class="ghost-btn" id="btn-reset">Reset</button>
   </div>
 </header>
 
-<main id="top">
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <span class="eyebrow">ecoinsestate.com · South Africa</span>
-      <h1>Buy, hold and send crypto in rands, with <em>a real person</em> one tap away.</h1>
-      <p class="lede">eCoins Estate is a crypto wallet and trading app for South Africans. It gets you from sign-up to your first R100 of Bitcoin in about five minutes, and it is built around the problems users report most in today's apps: slow support, account lockouts and costly sending mistakes.</p>
+<div class="shell">
+  <nav class="side" id="side" aria-label="Main">
+    <a href="#dashboard" data-v="dashboard"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3zM13 21h8V11h-8zM3 21h8v-6H3zM13 3v6h8V3z"/></svg><span>Dashboard</span></a>
+    <a href="#trade" data-v="trade"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg><span>Trade</span></a>
+    <a href="#wallet" data-v="wallet"><svg viewBox="0 0 24 24"><path d="M3 7h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 7l12-4v4"/><circle cx="16.5" cy="13.5" r="1.3"/></svg><span>Wallet</span></a>
+    <a href="#history" data-v="history"><svg viewBox="0 0 24 24"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/></svg><span>History</span></a>
+    <button id="side-help" data-help><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Support</span></button>
+  </nav>
 
-      <div class="tour" id="tour">
-        <div class="tour-head">Tap a step to drive the prototype</div>
-        <button data-goto="welcome"><span class="n">01</span><span><b>Sign up in four short steps</b><span class="d">Mobile number, SA ID, selfie, done. You can deposit and buy at Level 1, and add proof of address later.</span></span></button>
-        <button data-goto="home"><span class="n">02</span><span><b>See everything in rands</b><span class="d">Your portfolio value, profit and loss, and a performance chart over 1D to 1Y.</span></span></button>
-        <button data-goto="deposit"><span class="n">03</span><span><b>Add rands from your bank</b><span class="d">Instant EFT, bank EFT with a personal reference, or card.</span></span></button>
-        <button data-goto="buy"><span class="n">04</span><span><b>Buy with every fee shown up front</b><span class="d">Type an amount in rands. The quote is locked for 15 seconds and every cent is itemised.</span></span></button>
-        <button data-goto="send"><span class="n">05</span><span><b>Send without losing coins</b><span class="d">The app checks for a missing XRP tag, asks Travel Rule questions, and protects new addresses.</span></span></button>
-        <button data-goto="help"><span class="n">06</span><span><b>Talk to a human</b><span class="d">Live chat with a named agent, the expected reply time, and your ticket status.</span></span></button>
-        <button data-goto="me"><span class="n">07</span><span><b>Security, limits and SARS tax report</b><span class="d">Verification level, two-factor login, address whitelist and a switch for Pro mode.</span></span></button>
+  <main id="main">
+    <!-- DASHBOARD -->
+    <section class="view" id="v-dashboard" hidden>
+      <div class="page-head">
+        <div><h1>Good day, Lerato</h1><p class="muted">Your account at a glance. All values in rands.</p></div>
+        <div class="head-actions">
+          <button class="btn gold" data-modal="deposit">Deposit rands</button>
+          <a class="btn" href="#trade">Trade</a>
+        </div>
       </div>
-    </div>
-
-    <div class="phone-col">
-      <div class="phone" aria-label="eCoins Estate app prototype">
-        <div class="screen" id="screen"></div>
+      <div class="stats" id="stats">
+        <div class="stat"><span class="lbl">Total value</span><b class="num" id="st-total">—</b><span class="sub" id="st-total-sub"></span></div>
+        <div class="stat"><span class="lbl">24h change</span><b class="num" id="st-day">—</b><span class="sub" id="st-day-sub"></span></div>
+        <div class="stat"><span class="lbl">Unrealised P&amp;L</span><b class="num" id="st-pnl">—</b><span class="sub" id="st-pnl-sub"></span></div>
+        <div class="stat"><span class="lbl">Rands available</span><b class="num" id="st-cash">—</b><span class="sub" id="st-cash-sub"></span></div>
       </div>
-      <p class="phone-note">Interactive prototype · prices are simulated · no real money</p>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="idea">
-  <div class="wrap">
-    <div class="eyebrow">The idea</div>
-    <h2>A local crypto app that treats trust as the product</h2>
-    <p class="intro">South Africa already has capable exchanges. User reviews show the gaps are in the experience around the trade: reaching support, getting back into a locked account, understanding fees, and sending without mistakes. eCoins Estate competes on those.</p>
-    <div class="grid3">
-      <div class="pillar"><span class="k">For</span><h3>First-time and everyday buyers</h3><p>People who want R200 a month in Bitcoin and don't want an order book. Pro mode is there for active traders who want one.</p></div>
-      <div class="pillar"><span class="k">Promise</span><h3>Rands in, crypto out, no surprises</h3><p>Every screen shows values in ZAR. Fees appear before you confirm. Withdrawals go to the bank account in your own name.</p></div>
-      <div class="pillar"><span class="k">Edge</span><h3>Human support and safe sending</h3><p>Live chat with named agents and visible reply times. The send flow catches missing tags, wrong networks and first sends to new addresses.</p></div>
-    </div>
-    <div class="grid2">
-      <div class="pillar"><span class="k">How we earn</span><h3>Revenue model (draft)</h3><p>Instant buy/sell fee of about 0.75%. Pro mode maker/taker fees of about 0.1–0.2%. A flat network fee on crypto withdrawals. Rand deposits by EFT are free. These numbers are placeholders to test against competitors.</p></div>
-      <div class="pillar"><span class="k">What must be true</span><h3>Licensing comes first</h3><p>To operate we need an FSCA FSP licence (or to start as a juristic representative under a licensed firm), FIC registration as an accountable institution, Travel Rule compliance, and written approval from PayFast and our bank.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="how">
-  <div class="wrap">
-    <div class="eyebrow">How it works</div>
-    <h2>Where the money and the coins go</h2>
-    <p class="intro">Customer rands sit in a separate client account at our bank, never in the company's operating account. Our internal ledger records who owns what. Trades are filled by a licensed liquidity partner, and crypto is held by a custody provider using MPC wallets, with most funds in cold storage.</p>
-    <div class="flow">
-<pre class="mermaid">
-flowchart LR
-  U[Customer's bank account] -- "EFT / Instant EFT / card" --> T[Segregated client account]
-  T --> L[(eCoins Estate ledger)]
-  L -- "buy / sell orders" --> LP[Liquidity partner]
-  LP -- "crypto settles" --> C[Custody provider: MPC hot wallet and cold storage]
-  C --> L
-  L -- "send crypto + Travel Rule data" --> X[External wallet or exchange]
-  L -- "withdraw rands" --> U
-  K[KYC provider: SA ID + selfie] -.-> L
-  A[AML monitoring and FIC reporting] -.-> L
-</pre>
-    </div>
-    <ol class="journey">
-      <li><div><b>Sign up and verify (FICA)</b><span>Mobile OTP, 13-digit SA ID checked against Home Affairs through the KYC provider, then a liveness selfie. Level 1 is unlocked in minutes.</span></div></li>
-      <li><div><b>Deposit rands</b><span>Each customer gets a unique EFT reference. The bank feed matches deposits to accounts automatically. Instant EFT arrives in seconds.</span></div></li>
-      <li><div><b>Buy</b><span>We get a quote from the liquidity partner, add our fee, and lock the price for 15 seconds. When the customer confirms, the ledger updates straight away and settlement with the partner happens in batches.</span></div></li>
-      <li><div><b>Hold</b><span>Coins sit with the custody provider. The app shows a live value in rands and the customer's profit or loss based on their actual purchase prices.</span></div></li>
-      <li><div><b>Send or withdraw</b><span>Address checks, Travel Rule details, and a cooling-off period for new addresses. Rand withdrawals only go to a verified bank account in the customer's own name.</span></div></li>
-      <li><div><b>Tax time</b><span>One tap produces a capital gains statement for the SARS tax year (March to February).</span></div></li>
-    </ol>
-  </div>
-</section>
-
-<section class="block" id="research">
-  <div class="wrap">
-    <div class="eyebrow">What users told us</div>
-    <h2>Complaints about current apps, and what we do about each</h2>
-    <p class="intro">We went through public reviews of the leading apps in South Africa and abroad: Luno on Hellopeter, the App Store and Capterra, VALR on review sites, and beginner comparisons that include Coinbase. Users like fast, clean buying. Most complaints are about what happens when something goes wrong.</p>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>What users said</th><th>What eCoins Estate does</th><th>Where in the demo</th></tr></thead>
-        <tbody>
-          <tr><td>Praise for apps where people bought crypto in about 5 minutes on their first use.<span class="src">Luno reviews, Capterra</span></td><td>Tiered verification: buy at Level 1 straight away and finish the remaining checks later. Amounts are entered in rands.</td><td>Steps 01, 04</td></tr>
-          <tr><td>Support is the most common complaint. Users say it's impossible to reach a person, and support just repeats the app's own prompts.<span class="src">Hellopeter, App Store reviews</span></td><td>Live chat with a named human from the first message, the expected reply time shown, and a ticket tracker with clear statuses.</td><td>Step 06</td></tr>
-          <tr><td>Account recovery that doesn't work, and long verification problems.<span class="src">App Store, Hellopeter</span></td><td>Recovery with an ID selfie and a call from an agent, so an inaccessible email can't lock you out. The verification level and the next step are always shown.</td><td>Step 07</td></tr>
-          <tr><td>Transactions voided because scanning a QR code didn't ask for the wallet tag.<span class="src">Hellopeter</span></td><td>The send flow stops if the tag or memo is missing and explains why. There is a test-send option for new addresses.</td><td>Step 05</td></tr>
-          <tr><td>Fees on sending crypto feel high and come as a surprise.<span class="src">Luno reviews</span></td><td>Every fee is itemised before confirmation, with the total shown in rands.</td><td>Steps 04, 05</td></tr>
-          <tr><td>Users were unhappy when performance graphs were removed.<span class="src">Luno reviews</span></td><td>The portfolio chart (1D–1Y) and profit or loss stay on the home screen.</td><td>Step 02</td></tr>
-          <tr><td>Busy, complex apps such as Binance and Trust Wallet overwhelm beginners. Coinbase is praised for simplicity and learning content.<span class="src">Beginner app comparisons, Reddit summaries</span></td><td>Simple mode by default and Pro mode behind a switch. Short explanations sit next to the decisions they relate to.</td><td>Steps 04, 07</td></tr>
-          <tr><td>Low fees and a clean interface are VALR's strengths. A narrow coin list and strict KYC are its weaknesses.<span class="src">VALR reviews</span></td><td>Launch with a short list of well-known coins, explain why each KYC step is needed, and add coins as liquidity allows.</td><td>Steps 01, 02</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="roadmap">
-  <div class="wrap">
-    <div class="eyebrow">Roadmap</div>
-    <h2>From demo to launch</h2>
-    <p class="intro">Licensing sets the pace. We build the product alongside it but can't take customer money until it's in place.</p>
-    <div class="grid2">
-      <div class="phase now"><span class="when">Phase 0 · now</span><h3>Validate and get permission</h3><ul><li>Collect cofounder and tester feedback on this demo</li><li>Ask PayFast and the bank in writing whether they allow crypto</li><li>Hire a compliance consultant, and choose between a full FSP licence and starting as a juristic representative</li><li>Register with the FIC on goAML and draft the RMCP</li></ul></div>
-      <div class="phase"><span class="when">Phase 1</span><h3>Choose partners</h3><ul><li>Liquidity partner (a local exchange B2B API)</li><li>Custody provider (MPC) or a custody arrangement through the partner</li><li>KYC provider with SA ID and liveness checks</li><li>Segregated client account at the bank</li></ul></div>
-      <div class="phase"><span class="when">Phase 2</span><h3>Build the first version</h3><ul><li>Sign-up and verification, EFT deposits, buy and sell, wallet, send, withdraw</li><li>Ledger, admin console, AML monitoring</li><li>Live support chat</li></ul></div>
-      <div class="phase"><span class="when">Phase 3</span><h3>Closed beta, then launch</h3><ul><li>About 100 invited users with low limits</li><li>Security audit and penetration test</li><li>Public launch once the licence is confirmed</li></ul></div>
-    </div>
-  </div>
-</section>
-
-<section class="block" id="feedback">
-  <div class="wrap">
-    <div class="eyebrow">Give feedback</div>
-    <h2>Tell us what works and what confuses you</h2>
-    <p class="intro">Try the prototype above, then fill this in. Your note opens in WhatsApp or your email app, ready to send to the founders.</p>
-    <div class="fb">
-      <form id="fb-form" novalidate>
-        <div class="field">
-          <label for="fb-area">Which part?</label>
-          <select id="fb-area">
-            <option>The overall idea</option>
-            <option>Sign-up and verification</option>
-            <option>Home and portfolio</option>
-            <option>Depositing rands</option>
-            <option>Buying</option>
-            <option>Sending crypto</option>
-            <option>Support chat</option>
-            <option>Security and account</option>
-            <option>Business model or roadmap</option>
-          </select>
+      <div class="dash-grid">
+        <div class="panel" id="pf-panel">
+          <div class="panel-head"><h2>Portfolio value</h2><span class="muted small">Current holdings over the last 7 days · hourly</span></div>
+          <div id="pf-chart" class="pf-chart"></div>
         </div>
-        <div class="field">
-          <label id="fb-rating-label">How good is it? (1–5)</label>
-          <div class="stars" role="group" aria-labelledby="fb-rating-label" id="fb-stars">
-            <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button>
-          </div>
+        <div class="panel" id="alloc-panel">
+          <div class="panel-head"><h2>Allocation</h2></div>
+          <div class="alloc"><canvas id="alloc" width="180" height="180" aria-label="Allocation chart"></canvas><ul id="alloc-legend" class="legend"></ul></div>
         </div>
-        <div class="field">
-          <label for="fb-use">Would you use eCoins Estate?</label>
-          <select id="fb-use"><option>Yes</option><option>Maybe</option><option>No</option></select>
+        <div class="panel span2" id="holdings-panel">
+          <div class="panel-head"><h2>Holdings</h2><a href="#wallet" class="small link">Wallet →</a></div>
+          <div class="tbl-wrap"><table class="tbl" id="holdings"><thead><tr><th>Asset</th><th class="r">Balance</th><th class="r">Price</th><th class="r">24h</th><th class="r">Value</th><th class="r">Avg cost</th><th class="r">P&amp;L</th><th></th></tr></thead><tbody></tbody></table></div>
         </div>
-        <div class="field">
-          <label for="fb-text">Your notes</label>
-          <textarea id="fb-text" placeholder="What did you like? What would you change?"></textarea>
+        <div class="panel" id="watch-panel">
+          <div class="panel-head"><h2>Markets</h2><span class="muted small">24h</span></div>
+          <div id="watch" class="watch"></div>
         </div>
-        <div class="field">
-          <label for="fb-name">Your name (optional)</label>
-          <input id="fb-name" class="input" autocomplete="name">
+        <div class="panel span2" id="quick-panel">
+          <div class="panel-head"><h2>Quick buy</h2><span class="muted small">Simple mode · one fee, price locked 15s</span></div>
+          <form id="quick" class="quick">
+            <div class="chips" id="quick-asset"></div>
+            <div class="quick-row">
+              <label class="field grow"><span>Amount in rands</span><input id="quick-amt" class="input num" inputmode="decimal" value="1000"></label>
+              <div class="quick-out"><span class="muted small">You get about</span><b class="num" id="quick-get">—</b><span class="muted small" id="quick-fee"></span></div>
+              <button class="btn gold" id="quick-go">Buy now</button>
+            </div>
+          </form>
         </div>
-        <button class="btn gold" id="fb-wa" type="submit">Send via WhatsApp</button>
-        <button class="btn ghost" id="fb-mail" type="button">Send via email</button>
-        <button class="btn ghost" id="fb-copy" type="button">Copy my feedback</button>
-        <p class="sub" id="fb-status" role="status"></p>
-      </form>
-      <div class="fb-list">
-        <div class="fb-item"><div class="meta"><span class="area">What we most want to know</span></div>
-          <p>1. Would you trust this app with R1 000 of your own money? If not, what's stopping you?
-2. Which screen was confusing, or felt slower than it should?
-3. What would make you switch from the app you use now?
-4. Is anything missing that you'd expect on day one?</p></div>
-        <div class="fb-item"><div class="meta"><span class="area">Preview of your message</span></div><p id="fb-preview" class="mono" style="font-size:13px"></p></div>
+        <div class="panel" id="activity-panel">
+          <div class="panel-head"><h2>Recent activity</h2><a href="#history" class="small link">All →</a></div>
+          <ul id="activity" class="activity"></ul>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-</main>
+    </section>
 
-<footer><div class="wrap">eCoins Estate concept demo. Not a live service: no real money, prices or accounts. Licensing (FSCA, FIC) is still in progress. Research sources: Hellopeter, Capterra, Apple App Store, SourceForge, Hedge with Crypto and Bitdegree reviews of Luno and VALR, plus beginner comparisons that include Coinbase.</div></footer>
-
-<script>
-(() => {
-  const zar = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' });
-  const R = v => zar.format(v);
-  const ASSETS = {
-    BTC:  { name: 'Bitcoin',  px: 1712400, chg: 2.41, color: '#C9831C', dp: 6 },
-    ETH:  { name: 'Ether',    px: 58940,   chg: 1.12, color: '#5560A8', dp: 5 },
-    USDT: { name: 'Tether',   px: 18.21,   chg: 0.02, color: '#2F8F75', dp: 2 },
-    SOL:  { name: 'Solana',   px: 3125,    chg: -1.84, color: '#7A3FB8', dp: 4 },
-    XRP:  { name: 'XRP',      px: 41.8,    chg: 3.05, color: '#3B4A55', dp: 2 },
-  };
-  const S = {
-    screen: 'welcome', kyc: 0, range: '1W', pro: false, toast: '',
-    bal: { ZAR: 4250, BTC: 0.0123, ETH: 0.42, USDT: 180, SOL: 3.1, XRP: 250 },
-    cost: 52800,
-    buy: { asset: 'BTC', amt: 500, side: 'buy', lock: 15, done: null },
-    send: { asset: 'XRP', addr: '', tag: '', noTag: false, who: '', name: '', test: true, done: false },
-    dep: 'eft',
-    chat: [
-      { me: false, t: 'Hi, I\'m Thandi from the eCoins Estate support team. How can I help today?' },
-    ],
-    sec: { twofa: true, whitelist: true },
-  };
-  const scr = document.getElementById('screen');
-  const tourBtns = [...document.querySelectorAll('#tour button')];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const total = () => S.bal.ZAR + Object.keys(ASSETS).reduce((s, k) => s + S.bal[k] * ASSETS[k].px, 0);
-  const cryptoVal = () => total() - S.bal.ZAR;
-  const fmtC = (k, v) => v.toLocaleString('en-ZA', { maximumFractionDigits: ASSETS[k].dp, minimumFractionDigits: Math.min(2, ASSETS[k].dp) });
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-
-  const icons = {
-    home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
-    trade: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v16M7 4l-3 3M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg>',
-    send: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12l16-8-6 16-3-7z"/></svg>',
-    help: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/></svg>',
-    me: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
-  };
-  const tabFor = { home: 'home', deposit: 'home', trade: 'trade', buy: 'trade', send: 'send', help: 'help', me: 'me' };
-  const tabbar = () => {
-    const cur = tabFor[S.screen];
-    return `<nav class="tabs" aria-label="App tabs">${[['home','Home'],['trade','Trade'],['send','Send'],['help','Help'],['me','Me']].map(([k,l]) =>
-      `<button data-go="${k}" aria-current="${cur === k}">${icons[k]}${l}</button>`).join('')}</nav>`;
-  };
-  const status = () => `<div class="status"><span>09:41</span><span>LTE ▮▮▮</span></div>`;
-  const tok = k => `<span class="tok" style="background:${ASSETS[k].color}">${k}</span>`;
-
-  const screens = {
-    welcome: () => `
-      <div class="welcome">
-        <span class="coin" style="width:46px;height:46px;font-size:18px">eC</span>
-        <h2>Crypto in rands, made simple.</h2>
-        <p>Buy Bitcoin from R10. Fees shown before you pay. A real person on chat when you need one.</p>
-        <button class="btn gold" data-go="kyc">Create free account</button>
-        <button class="btn ghost" data-go="home">I already have an account</button>
-        <p style="font-size:11px">Demo only. FSCA licence application in progress; this is not a live service. Crypto prices go up and down; only invest what you can afford to lose.</p>
-      </div>`,
-    kyc: () => {
-      const steps = [
-        { h: 'Your mobile number', why: 'We\'ll send a one-time PIN. Your number also secures your account.',
-          body: `<div class="field"><label for="k1">Mobile number</label><div class="row"><span class="chip">+27</span><input id="k1" class="input" inputmode="tel" value="82 555 0142"></div></div>` },
-        { h: 'Your South African ID', why: 'FICA law requires us to confirm who you are. We check your ID with Home Affairs; it takes seconds.',
-          body: `<div class="field"><label for="k2">13-digit ID number</label><input id="k2" class="input mono" inputmode="numeric" value="9203155800083"></div><div class="note">Passport holders can verify too. It takes a bit longer.</div>` },
-        { h: 'Take a quick selfie', why: 'This checks that you match your ID photo and stops anyone else opening an account in your name.',
-          body: `<div class="card" style="height:170px;display:grid;place-items:center;border-style:dashed"><div style="width:110px;height:140px;border-radius:50%;border:3px solid var(--gold)"></div></div><div class="sub">Good light, no hat or sunglasses.</div>` },
-        { h: 'You\'re verified: Level 1', why: '',
-          body: `<div class="card"><div class="row between"><b>Level 1</b><span class="badge">Active</span></div><div class="kv" style="margin-top:10px"><dt>Deposit limit</dt><dd>R5 000 / day</dd><dt>Buy & sell</dt><dd>Yes</dd><dt>Send crypto</dt><dd>After Level 2</dd></div></div><div class="note">Upload a proof of address (no older than 3 months) whenever you're ready to raise your limits to R50 000 / day.</div>` },
-      ];
-      const st = steps[S.kyc];
-      return `${status()}<div class="view">
-        ${S.kyc < 3 ? `<button class="back" data-act="kyc-back">← Back</button>` : ''}
-        <div class="progress" aria-label="Sign-up progress"><i style="width:${(S.kyc + 1) * 25}%"></i></div>
-        <div class="sub">Step ${S.kyc + 1} of 4</div>
-        <div class="h">${st.h}</div>
-        ${st.why ? `<p class="sub">${st.why}</p>` : ''}
-        ${st.body}
-        <div style="flex:1"></div>
-        <button class="btn ${S.kyc === 3 ? 'gold' : ''}" data-act="kyc-next">${S.kyc === 3 ? 'Add rands and buy' : 'Continue'}</button>
-      </div>`;
-    },
-    home: () => {
-      const t = total(); const pnl = cryptoVal() - S.cost; const pct = pnl / S.cost * 100;
-      return `${status()}<div class="view">
-        <div class="row between"><div><div class="sub">Good morning, Lerato</div><b>Total balance</b></div><span class="coin">eC</span></div>
-        <div><div class="big" id="tot">${R(t)}</div>
-          <div class="sub"><span class="${pnl >= 0 ? 'up' : 'down'}" id="pnl">${pnl >= 0 ? '▲' : '▼'} ${R(Math.abs(pnl))} (${pct.toFixed(1)}%)</span> all-time on crypto</div></div>
-        <div class="card" style="padding:10px 10px 6px">
-          <canvas class="chart" id="chart" aria-label="Portfolio value chart"></canvas>
-          <div class="chips" style="justify-content:space-between;margin-top:6px">${['1D','1W','1M','1Y'].map(r => `<button class="chip" data-range="${r}" aria-pressed="${S.range === r}">${r}</button>`).join('')}</div>
+    <!-- TRADE -->
+    <section class="view trade" id="v-trade" hidden>
+      <div class="pair-bar panel" id="pair-bar">
+        <div class="pair-pick" id="pair-pick"></div>
+        <div class="pair-stats">
+          <div><b class="num big-px" id="px-last">—</b><span class="sub num" id="px-chg"></span></div>
+          <div><span class="lbl">24h high</span><b class="num" id="px-high">—</b></div>
+          <div><span class="lbl">24h low</span><b class="num" id="px-low">—</b></div>
+          <div><span class="lbl">24h volume</span><b class="num" id="px-vol">—</b></div>
+          <div><span class="lbl">Fees</span><b class="num">0.10% / 0.18%</b></div>
         </div>
-        <div class="actions">
-          <button class="act" data-go="deposit"><span class="ic">+</span>Deposit</button>
-          <button class="act" data-act="buy-BTC"><span class="ic">↗</span>Buy</button>
-          <button class="act" data-act="sell-BTC"><span class="ic">↘</span>Sell</button>
-          <button class="act" data-go="send"><span class="ic">→</span>Send</button>
-        </div>
-        <div class="card">
-          <div class="row between"><b>Your assets</b><span class="sub">Rands: ${R(S.bal.ZAR)}</span></div>
-          <div class="list">${Object.keys(ASSETS).map(k => `
-            <button class="li" data-act="buy-${k}">${tok(k)}
-              <span><b>${ASSETS[k].name}</b><br><span class="sub">${fmtC(k, S.bal[k])} ${k}</span></span>
-              <span class="r">${R(S.bal[k] * ASSETS[k].px)}<br><span class="${ASSETS[k].chg >= 0 ? 'up' : 'down'}">${ASSETS[k].chg >= 0 ? '+' : ''}${ASSETS[k].chg.toFixed(2)}%</span></span>
-            </button>`).join('')}</div>
-        </div>
-        <div class="note">New to crypto? <b>Bitcoin in 3 minutes</b>: a short read on what you're buying and how prices move.</div>
-      </div>${tabbar()}`;
-    },
-    deposit: () => {
-      const opts = { instant: ['Instant EFT', 'Arrives in seconds · Free'], eft: ['Bank EFT', '1–2 business days · Free'], card: ['Card', 'Instant · 2.9% fee'] };
-      let body = '';
-      if (S.dep === 'eft') body = `
-        <div class="card"><div class="kv">
-          <dt>Bank</dt><dd>Demo Bank</dd><dt>Account name</dt><dd>eCoins Estate Client Acc</dd><dt>Account no.</dt><dd>000 000 0000 (demo)</dd><dt>Branch code</dt><dd>000000 (demo)</dd>
-          <dt><b style="color:var(--ink)">Your reference</b></dt><dd><b style="color:var(--gold);font-size:15px">ECE7K2Q9</b></dd>
-        </div></div>
-        <div class="note warn"><b>Use this reference exactly.</b> This is how we match your money to your account. A wrong reference can delay your deposit.</div>
-        <button class="btn ghost" data-act="copy">Copy bank details</button>`;
-      else if (S.dep === 'instant') body = `
-        <div class="field"><label for="dep-amt">Amount</label><input id="dep-amt" class="input mono" inputmode="decimal" value="1000"></div>
-        <div class="sub">You'll pick your bank (FNB, Standard Bank, Absa, Capitec, Nedbank and others) and approve in your banking app.</div>
-        <button class="btn" data-act="instant">Continue to your bank</button>`;
-      else body = `
-        <div class="field"><label for="dep-card">Amount</label><input id="dep-card" class="input mono" inputmode="decimal" value="500"></div>
-        <div class="note">Card payments go through our payment partner. Your card must be in your own name.</div>
-        <button class="btn" data-act="instant">Pay by card</button>`;
-      return `${status()}<div class="view">
-        <button class="back" data-go="home">← Home</button>
-        <div class="h">Add rands</div>
-        <div class="list card" style="padding:0 14px">${Object.entries(opts).map(([k,[a,b]]) => `
-          <button class="li" data-dep="${k}" style="grid-template-columns:22px minmax(0,1fr) auto"><span>${S.dep === k ? '●' : '○'}</span><span><b>${a}</b><br><span class="sub">${b}</span></span><span></span></button>`).join('')}</div>
-        ${body}
-      </div>${tabbar()}`;
-    },
-    trade: () => `${status()}<div class="view">
-      <div class="row between"><div class="h">Markets</div>
-        <div class="chips"><button class="chip" data-act="mode-simple" aria-pressed="${!S.pro}">Simple</button><button class="chip" data-act="mode-pro" aria-pressed="${S.pro}">Pro</button></div></div>
-      ${S.pro ? proView() : ''}
-      <div class="card"><div class="list">${Object.keys(ASSETS).map(k => `
-        <button class="li" data-act="buy-${k}">${tok(k)}
-          <span><b>${ASSETS[k].name}</b><br><span class="sub">${k}/ZAR</span></span>
-          <span class="r">${R(ASSETS[k].px)}<br><span class="${ASSETS[k].chg >= 0 ? 'up' : 'down'}">${ASSETS[k].chg >= 0 ? '+' : ''}${ASSETS[k].chg.toFixed(2)}%</span></span>
-        </button>`).join('')}</div></div>
-      ${S.pro ? '' : '<div class="note">Simple mode buys at a locked price with one fee. Switch to <b>Pro</b> for limit orders, the order book and lower fees.</div>'}
-    </div>${tabbar()}`,
-    buy: () => {
-      const b = S.buy, a = ASSETS[b.asset];
-      if (b.done) return `${status()}<div class="view" style="justify-content:center;text-align:center">
-        <div class="coin" style="width:64px;height:64px;font-size:26px;margin:0 auto;background:var(--good)">✓</div>
-        <div class="h">${b.done.side === 'buy' ? 'You bought' : 'You sold'} ${fmtC(b.asset, b.done.qty)} ${b.asset}</div>
-        <p class="sub">${b.done.side === 'buy' ? 'Paid' : 'Received'} ${R(b.done.zar)} including ${R(b.done.fee)} fees. It's in your wallet now.</p>
-        <div class="card" style="text-align:left"><div class="kv"><dt>Reference</dt><dd>TX-${b.done.ref}</dd><dt>Price</dt><dd>${R(b.done.px)}</dd></div></div>
-        <button class="btn" data-go="home">Back to home</button>
-        <button class="btn ghost" data-act="buy-again">Set up a monthly buy</button>
-      </div>${tabbar()}`;
-      return `${status()}<div class="view">
-        <button class="back" data-go="trade">← Markets</button>
-        <div class="chips"><button class="chip" data-act="side-buy" aria-pressed="${b.side === 'buy'}">Buy</button><button class="chip" data-act="side-sell" aria-pressed="${b.side === 'sell'}">Sell</button></div>
-        <div class="row">${tok(b.asset)}<div><b>${b.side === 'buy' ? 'Buy' : 'Sell'} ${a.name}</b><div class="sub">1 ${b.asset} = ${R(a.px)}</div></div></div>
-        <div style="text-align:center">
-          <label class="sub" for="amt">Amount in rands</label>
-          <div class="row" style="justify-content:center;gap:2px"><span class="big" style="font-size:34px;color:var(--muted)">R</span><input id="amt" class="amount-in" inputmode="decimal" value="${b.amt}" style="max-width:220px"></div>
-          <div class="sub" id="getq"></div>
-        </div>
-        <div class="chips" style="justify-content:center">${[100, 500, 1000, 2500].map(v => `<button class="chip" data-amt="${v}">R${v.toLocaleString('en-ZA')}</button>`).join('')}</div>
-        <div class="card"><dl class="kv" id="fees" style="margin:0"></dl></div>
-        <div class="note" id="lock">Price locked for <b id="lockn">${b.lock}</b>s</div>
-        <div id="buyerr"></div>
-        <button class="btn gold" id="confirm" data-act="confirm-buy">Confirm</button>
-      </div>${tabbar()}`;
-    },
-    send: () => {
-      const s = S.send;
-      if (s.done) return `${status()}<div class="view" style="justify-content:center;text-align:center">
-        <div class="coin" style="width:64px;height:64px;font-size:26px;margin:0 auto;background:var(--gold)">→</div>
-        <div class="h">${s.test ? 'Test send on its way' : 'Send scheduled'}</div>
-        <p class="sub">${s.test ? 'We sent 1 XRP first. Once it shows up at the destination, tap "It arrived" in your activity to release the rest.' : 'This is a new address, so we\'ll hold the send for 1 hour and SMS you to confirm. You can cancel at any time before then.'}</p>
-        <button class="btn" data-act="send-reset">Done</button>
-      </div>${tabbar()}`;
-      const needsTag = s.asset === 'XRP';
-      const addrOk = s.addr.trim().length >= 25;
-      const tagOk = !needsTag || s.tag.trim() || s.noTag;
-      const whoOk = s.who && (s.who !== 'person' || s.name.trim());
-      const ready = addrOk && tagOk && whoOk;
-      return `${status()}<div class="view">
-        <div class="h">Send crypto</div>
-        <div class="chips">${['BTC','ETH','USDT','XRP'].map(k => `<button class="chip" data-sasset="${k}" aria-pressed="${s.asset === k}">${k}</button>`).join('')}</div>
-        <div class="sub">Available: ${fmtC(s.asset, S.bal[s.asset])} ${s.asset} · Network: ${{BTC:'Bitcoin', ETH:'Ethereum (ERC-20)', USDT:'Tron (TRC-20)', XRP:'XRP Ledger'}[s.asset]}</div>
-        <div class="field"><label for="saddr">Recipient address</label><input id="saddr" class="input mono" placeholder="Paste or scan an address" value="${esc(s.addr)}"></div>
-        <button class="chip" data-act="paste-addr" style="justify-self:start;align-self:flex-start">Use example exchange address</button>
-        ${needsTag ? `<div class="field"><label for="stag">Destination tag (memo)</label><input id="stag" class="input mono" inputmode="numeric" placeholder="e.g. 104882" value="${esc(s.tag)}" ${s.noTag ? 'disabled' : ''}></div>
-          ${addrOk && !s.tag.trim() && !s.noTag ? `<div class="note bad"><b>Add the destination tag.</b> Exchanges use it to know whose account the XRP belongs to. If it's missing, your XRP can be lost. Copy it from the "deposit" page of the exchange you're sending to.</div>` : ''}
-          <label class="row sub"><input type="checkbox" id="notag" ${s.noTag ? 'checked' : ''}> This is my own private wallet; it doesn't use tags</label>` : ''}
-        <div class="field"><span style="font-size:13px;font-weight:600">Who owns this wallet?</span>
-          <div class="chips">${[['me','Me'],['person','Another person'],['exchange','An exchange']].map(([k,l]) => `<button class="chip" data-who="${k}" aria-pressed="${s.who === k}">${l}</button>`).join('')}</div>
-          ${s.who === 'person' ? `<input id="sname" class="input" placeholder="Their full name" value="${esc(s.name)}">` : ''}
-          <span class="sub">South African law (the Travel Rule) requires us to ask this for every crypto transfer.</span></div>
-        <label class="row sub"><input type="checkbox" id="stest" ${s.test ? 'checked' : ''}> Send a small test amount first (recommended for new addresses)</label>
-        <div class="card"><dl class="kv" style="margin:0"><dt>Network fee</dt><dd>${s.asset === 'BTC' ? '0.00005 BTC (R86)' : s.asset === 'ETH' ? '0.0012 ETH (R71)' : s.asset === 'USDT' ? '1 USDT (R18)' : '0.2 XRP (R8)'}</dd><dt>Arrives in</dt><dd>${s.asset === 'BTC' ? '~30 min' : '~2 min'}</dd></dl></div>
-        <button class="btn" data-act="send-go" ${ready ? '' : 'disabled'}>Review send</button>
-      </div>${tabbar()}`;
-    },
-    help: () => `${status()}<div class="view">
-      <div class="row between"><div class="h">Help</div><span class="badge" style="background:var(--sunk);color:var(--good)">● Agents online</span></div>
-      <div class="card"><div class="row between"><b>Ticket #48213</b><span class="sub">Deposit not showing</span></div>
-        <div class="steps" style="margin-top:10px"><div class="on">Received</div><div class="on">With Thandi</div><div>Resolved</div></div>
-        <div class="sub" style="margin-top:8px">Typical reply time right now: <b style="color:var(--ink)">4 minutes</b></div></div>
-      <div style="display:flex;flex-direction:column;gap:8px" id="chatlog">${S.chat.map(m => `<div class="msg ${m.me ? 'me' : 'them'}">${esc(m.t)}</div>`).join('')}</div>
-      <div style="flex:1"></div>
-      <div class="chips">${['My deposit is late', 'I can\'t log in', 'Fees question'].map(q => `<button class="chip" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>
-      <form class="row" id="chatform"><input id="chatin" class="input" placeholder="Message Thandi" autocomplete="off"><button class="btn" style="width:auto">Send</button></form>
-    </div>${tabbar()}`,
-    me: () => `${status()}<div class="view">
-      <div class="row"><span class="coin" style="width:46px;height:46px;background:var(--ink);color:var(--bg)">LM</span><div><b>Lerato Mokoena</b><div class="sub">Customer since 2026</div></div></div>
-      <div class="card"><div class="row between"><b>Verification: Level 2 of 3</b><span class="badge">R50 000 / day</span></div>
-        <div class="progress" style="margin-top:10px"><i style="width:66%"></i></div>
-        <div class="sub" style="margin-top:8px">Next: add your source of funds to unlock R500 000 / day.</div></div>
-      <div class="card list" style="padding:0 14px">
-        <div class="li" style="grid-template-columns:minmax(0,1fr) auto"><span><b>Authenticator app (2FA)</b><br><span class="sub">Needed to log in and withdraw</span></span><button class="toggle" data-sec="twofa" aria-pressed="${S.sec.twofa}" aria-label="Authenticator app"></button></div>
-        <div class="li" style="grid-template-columns:minmax(0,1fr) auto"><span><b>Address whitelist</b><br><span class="sub">Only send to saved addresses</span></span><button class="toggle" data-sec="whitelist" aria-pressed="${S.sec.whitelist}" aria-label="Address whitelist"></button></div>
-        <div class="li" style="grid-template-columns:minmax(0,1fr) auto"><span><b>Pro mode</b><br><span class="sub">Order book and limit orders</span></span><button class="toggle" data-act="pro-toggle" aria-pressed="${S.pro}" aria-label="Pro mode"></button></div>
-        <div class="li" style="grid-template-columns:minmax(0,1fr) auto"><span><b>Anti-phishing code</b><br><span class="sub">Shown in every real email from us</span></span><span class="mono">KUDU-42</span></div>
       </div>
-      <button class="btn ghost" data-act="tax">Download SARS tax statement (2025/26)</button>
-      <div class="note"><b>Locked out?</b> You can always recover your account with your ID and a selfie, and an agent will call you back. You won't be stuck behind an email link.</div>
-      <button class="btn ghost" data-go="welcome">Sign out</button>
-    </div>${tabbar()}`,
-  };
+      <div class="panel chart-panel" id="chart-panel">
+        <div class="panel-head">
+          <div class="chips" id="tf"></div>
+          <span class="muted small" id="chart-note">Times in SAST · your open orders appear as lines</span>
+        </div>
+        <div id="chart" class="chart"></div>
+      </div>
+      <div class="panel book-panel" id="book-panel">
+        <div class="panel-head"><div class="seg" id="book-tabs"><button data-bt="book" aria-pressed="true">Order book</button><button data-bt="trades" aria-pressed="false">Trades</button></div></div>
+        <div id="book" class="book"></div>
+        <div id="trades" class="tape" hidden></div>
+      </div>
+      <div class="panel form-panel" id="order-panel">
+        <div class="seg side-seg" id="o-side"><button data-side="buy" aria-pressed="true">Buy</button><button data-side="sell" aria-pressed="false">Sell</button></div>
+        <div class="tabs-line" id="o-type"><button data-type="market" aria-pressed="false">Market</button><button data-type="limit" aria-pressed="true">Limit</button><button data-type="stop" aria-pressed="false">Stop-limit</button></div>
+        <form id="o-form" class="o-form" novalidate>
+          <div class="avail muted small">Available <b class="num" id="o-avail">—</b></div>
+          <label class="field" id="f-stop" hidden><span>Stop price (ZAR)</span><input class="input num" id="o-stop" inputmode="decimal" autocomplete="off"></label>
+          <label class="field" id="f-price"><span>Limit price (ZAR)</span><input class="input num" id="o-price" inputmode="decimal" autocomplete="off"></label>
+          <div class="field" id="f-mkt" hidden><span>Price</span><div class="input num muted">Best market price</div></div>
+          <label class="field"><span id="o-amt-lbl">Amount (BTC)</span><input class="input num" id="o-amt" inputmode="decimal" autocomplete="off" placeholder="0.00"></label>
+          <div class="pcts" id="o-pct"><button type="button" data-p="25">25%</button><button type="button" data-p="50">50%</button><button type="button" data-p="75">75%</button><button type="button" data-p="100">Max</button></div>
+          <label class="field"><span>Total (ZAR)</span><input class="input num" id="o-total" inputmode="decimal" autocomplete="off" placeholder="0.00"></label>
+          <dl class="kv small" id="o-sum"></dl>
+          <p class="o-err" id="o-err" role="alert"></p>
+          <button class="btn buy" id="o-submit">Buy BTC</button>
+        </form>
+      </div>
+      <div class="panel orders-panel" id="orders-panel">
+        <div class="panel-head"><div class="tabs-line" id="ot"><button data-ot="open" aria-pressed="true">Open orders <span id="open-n" class="count"></span></button><button data-ot="hist" aria-pressed="false">Order history</button><button data-ot="fills" aria-pressed="false">Trade history</button><button data-ot="bal" aria-pressed="false">Balances</button></div></div>
+        <div class="tbl-wrap" id="ot-body"></div>
+      </div>
+    </section>
 
-  function proView() {
-    const p = ASSETS.BTC.px; let asks = '', bids = '';
-    for (let i = 4; i >= 0; i--) asks += `<div><span class="down">${Math.round(p + 120 + i * 85).toLocaleString('en-ZA')}</span><span>${(0.02 + i * 0.013).toFixed(4)}</span></div>`;
-    for (let i = 0; i < 5; i++) bids += `<div><span class="up">${Math.round(p - 60 - i * 90).toLocaleString('en-ZA')}</span><span>${(0.03 + i * 0.011).toFixed(4)}</span></div>`;
-    return `<div class="card"><div class="row between"><b>BTC/ZAR order book</b><span class="sub">Maker 0.10% · Taker 0.18%</span></div>
-      <div class="ob" style="margin-top:8px"><div style="display:block">${bids}</div><div style="display:block">${asks}</div></div>
-      <div class="row" style="margin-top:10px"><button class="btn" style="background:var(--good)">Limit buy</button><button class="btn" style="background:var(--bad)">Limit sell</button></div></div>`;
-  }
+    <!-- WALLET -->
+    <section class="view" id="v-wallet" hidden>
+      <div class="page-head">
+        <div><h1>Wallet</h1><p class="muted">Deposit, withdraw, send and receive. Coins are held by our custody partner, most of them in cold storage.</p></div>
+        <div class="head-actions">
+          <button class="btn gold" data-modal="deposit" id="w-deposit">Deposit rands</button>
+          <button class="btn" data-modal="withdraw">Withdraw rands</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="tbl-wrap"><table class="tbl" id="wallet-tbl"><thead><tr><th>Asset</th><th class="r">Total</th><th class="r">In orders</th><th class="r">Available</th><th class="r">Value (ZAR)</th><th class="r">Actions</th></tr></thead><tbody></tbody></table></div>
+      </div>
+      <div class="wallet-notes">
+        <div class="panel note-card"><h3>Security on this account</h3><ul class="checks"><li>Authenticator app (2FA) on</li><li>Withdrawals only to saved addresses</li><li>New addresses held for 1 hour</li><li>Anti-phishing code: <b class="num">KUDU-42</b></li></ul></div>
+        <div class="panel note-card"><h3>Verification</h3><p class="muted">Level 2 of 3 · R50 000 a day. Add a source of funds to raise the limit to R500 000.</p><div class="bar"><i style="width:66%"></i></div></div>
+        <div class="panel note-card"><h3>Your bank account</h3><p class="muted">Demo Bank ••••4821, in your own name and verified. Rand withdrawals can only go here.</p></div>
+      </div>
+    </section>
 
-  // ---- buy calc
-  function quote() {
-    const b = S.buy, a = ASSETS[b.asset];
-    const amt = Math.max(0, parseFloat(String(b.amt).replace(/\s/g, '').replace(',', '.')) || 0);
-    const fee = +(amt * 0.0075).toFixed(2);
-    const qty = b.side === 'buy' ? (amt - fee) / a.px : amt / a.px;
-    return { amt, fee, qty, px: a.px };
-  }
-  function paintBuy() {
-    const q = quote(), b = S.buy;
-    const g = document.getElementById('getq'); if (!g) return;
-    g.textContent = b.side === 'buy' ? `You get ≈ ${fmtC(b.asset, q.qty)} ${b.asset}` : `You sell ≈ ${fmtC(b.asset, q.qty)} ${b.asset}`;
-    document.getElementById('fees').innerHTML = b.side === 'buy'
-      ? `<dt>Amount</dt><dd>${R(q.amt)}</dd><dt>eCoins Estate fee (0.75%)</dt><dd>${R(q.fee)}</dd><dt>Spent on ${b.asset}</dt><dd>${R(q.amt - q.fee)}</dd><dt class="tot">Total you pay</dt><dd class="tot">${R(q.amt)}</dd>`
-      : `<dt>Sale value</dt><dd>${R(q.amt)}</dd><dt>eCoins Estate fee (0.75%)</dt><dd>−${R(q.fee)}</dd><dt class="tot">You receive</dt><dd class="tot">${R(q.amt - q.fee)}</dd>`;
-    let err = '';
-    if (q.amt < 10) err = 'The minimum is R10.';
-    else if (b.side === 'buy' && q.amt > S.bal.ZAR) err = `You have ${R(S.bal.ZAR)} in rands. Lower the amount, or add rands first.`;
-    else if (b.side === 'sell' && q.qty > S.bal[b.asset]) err = `You have ${fmtC(b.asset, S.bal[b.asset])} ${b.asset}. Lower the amount.`;
-    document.getElementById('buyerr').innerHTML = err ? `<div class="note bad">${err}</div>` : '';
-    const c = document.getElementById('confirm');
-    c.disabled = !!err;
-    c.textContent = b.side === 'buy' ? `Buy ${b.asset} for ${R(q.amt)}` : `Sell for ${R(q.amt - q.fee)}`;
-  }
+    <!-- HISTORY -->
+    <section class="view" id="v-history" hidden>
+      <div class="page-head">
+        <div><h1>History</h1><p class="muted">Every trade, deposit and transfer, ready for your records and SARS.</p></div>
+        <div class="head-actions">
+          <button class="btn" id="csv">Export trades (CSV)</button>
+          <button class="btn" id="tax">SARS tax statement</button>
+        </div>
+      </div>
+      <div class="stats small-stats" id="hist-stats"></div>
+      <div class="panel"><div class="panel-head"><h2>Trades</h2></div><div class="tbl-wrap" id="hist-trades"></div></div>
+      <div class="panel"><div class="panel-head"><h2>Deposits, withdrawals and transfers</h2></div><div class="tbl-wrap" id="hist-moves"></div></div>
+    </section>
+  </main>
+</div>
 
-  // ---- chart
-  function seedSeries(range) {
-    const n = { '1D': 48, '1W': 56, '1M': 60, '1Y': 52 }[range];
-    const vol = { '1D': 0.004, '1W': 0.01, '1M': 0.02, '1Y': 0.05 }[range];
-    let seed = range.charCodeAt(1) * 97 + 13; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-    const end = cryptoVal(); const pts = [end];
-    for (let i = 1; i < n; i++) pts.unshift(pts[0] * (1 - (rnd() - 0.47) * vol * 2));
-    return pts;
-  }
-  function drawChart() {
-    const c = document.getElementById('chart'); if (!c) return;
-    const dpr = devicePixelRatio || 1, w = c.clientWidth, h = c.clientHeight;
-    c.width = w * dpr; c.height = h * dpr;
-    const x = c.getContext('2d'); x.scale(dpr, dpr);
-    const cs = getComputedStyle(document.documentElement);
-    const gold = cs.getPropertyValue('--gold').trim(), line = cs.getPropertyValue('--line').trim(), muted = cs.getPropertyValue('--muted').trim();
-    const pts = seedSeries(S.range); const lo = Math.min(...pts), hi = Math.max(...pts);
-    const pad = 8, X = i => pad + i * (w - pad * 2) / (pts.length - 1), Y = v => pad + (1 - (v - lo) / (hi - lo || 1)) * (h - pad * 2 - 12);
-    x.strokeStyle = line; x.lineWidth = 1; x.setLineDash([3, 4]);
-    [0.33, 0.66].forEach(f => { x.beginPath(); x.moveTo(0, h * f); x.lineTo(w, h * f); x.stroke(); });
-    x.setLineDash([]);
-    const grd = x.createLinearGradient(0, 0, 0, h); grd.addColorStop(0, gold + '55'); grd.addColorStop(1, gold + '00');
-    x.beginPath(); pts.forEach((v, i) => i ? x.lineTo(X(i), Y(v)) : x.moveTo(X(i), Y(v)));
-    x.lineTo(X(pts.length - 1), h); x.lineTo(X(0), h); x.closePath(); x.fillStyle = grd; x.fill();
-    x.beginPath(); pts.forEach((v, i) => i ? x.lineTo(X(i), Y(v)) : x.moveTo(X(i), Y(v)));
-    x.strokeStyle = gold; x.lineWidth = 2; x.stroke();
-    const lx = X(pts.length - 1), ly = Y(pts[pts.length - 1]);
-    x.beginPath(); x.arc(lx, ly, 4, 0, Math.PI * 2); x.fillStyle = gold; x.fill();
-    x.fillStyle = muted; x.font = '11px "IBM Plex Mono", monospace';
-    x.fillText('Crypto holdings · ' + S.range, pad, h - 2);
-  }
+<button class="chat-fab" id="chat-fab" data-help aria-label="Open support chat"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Help</span><i class="online"></i></button>
+<aside class="chat" id="chat" hidden aria-label="Support chat">
+  <div class="chat-head"><div><b>Thandi · Support</b><span class="small muted"><i class="dot"></i>Online · replies in about 2 min</span></div><button class="x" id="chat-x" aria-label="Close chat">×</button></div>
+  <div class="chat-log" id="chat-log"></div>
+  <div class="chips chat-q" id="chat-q"></div>
+  <form class="chat-in" id="chat-form"><input class="input" id="chat-input" placeholder="Type a message" autocomplete="off"><button class="btn gold">Send</button></form>
+</aside>
 
-  // ---- render
-  function render() {
-    scr.innerHTML = screens[S.screen]() + (S.toast ? `<div class="toast" role="status">${esc(S.toast)}</div>` : '');
-    tourBtns.forEach(b => b.setAttribute('aria-current', String(b.dataset.goto === S.screen || (b.dataset.goto === 'welcome' && S.screen === 'kyc'))));
-    if (S.screen === 'home') drawChart();
-    if (S.screen === 'buy' && !S.buy.done) paintBuy();
-    const v = scr.querySelector('.view'); if (v && S.screen === 'help') v.scrollTop = v.scrollHeight;
-  }
-  let toastT;
-  function toast(t) { S.toast = t; render(); clearTimeout(toastT); toastT = setTimeout(() => { S.toast = ''; render(); }, 2600); }
-  function go(s) { S.screen = s; if (s === 'buy') { S.buy.lock = 15; S.buy.done = null; } scr.querySelector('.view')?.scrollTo(0, 0); render(); }
+<div class="modal-back" id="modal" hidden><div class="modal" role="dialog" aria-modal="true" id="modal-box"></div></div>
+<div id="tour" hidden><div class="tour-spot" id="tour-spot"></div><div class="tour-pop" id="tour-pop" role="dialog" aria-live="polite"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
-  scr.addEventListener('click', e => {
-    const t = e.target.closest('button, input[type=checkbox]'); if (!t) return;
-    const d = t.dataset;
-    if (d.go) return go(d.go);
-    if (d.range) { S.range = d.range; return render(); }
-    if (d.amt) { S.buy.amt = d.amt; document.getElementById('amt').value = d.amt; return paintBuy(); }
-    if (d.dep) { S.dep = d.dep; return render(); }
-    if (d.sasset) { S.send.asset = d.sasset; S.send.tag = ''; S.send.noTag = false; return render(); }
-    if (d.who) { S.send.who = d.who; return render(); }
-    if (d.sec) { S.sec[d.sec] = !S.sec[d.sec]; return render(); }
-    if (d.q) { e.preventDefault(); return chat(d.q); }
-    if (t.id === 'notag') { S.send.noTag = t.checked; return render(); }
-    if (t.id === 'stest') { S.send.test = t.checked; return; }
-    const a = d.act; if (!a) return;
-    if (a === 'kyc-next') { if (S.kyc < 3) { S.kyc++; render(); } else { S.kyc = 0; S.dep = 'eft'; go('deposit'); } }
-    else if (a === 'kyc-back') { if (S.kyc) { S.kyc--; render(); } else go('welcome'); }
-    else if (a.startsWith('buy-') || a.startsWith('sell-')) { const [side, k] = a.split('-'); S.buy.asset = k; S.buy.side = side; if (side === 'sell') S.buy.amt = 200; go('buy'); }
-    else if (a === 'side-buy' || a === 'side-sell') { S.buy.side = a.slice(5); render(); }
-    else if (a === 'confirm-buy') {
-      const q = quote(), b = S.buy;
-      if (b.side === 'buy') { S.bal.ZAR -= q.amt; S.bal[b.asset] += q.qty; S.cost += q.amt - q.fee; }
-      else { S.bal.ZAR += q.amt - q.fee; S.bal[b.asset] -= q.qty; S.cost -= q.amt; }
-      b.done = { side: b.side, qty: q.qty, zar: q.amt, fee: q.fee, px: q.px, ref: Math.random().toString(36).slice(2, 8).toUpperCase() };
-      render();
-    }
-    else if (a === 'buy-again') toast('Monthly buy: pick a day and an amount, from R50.');
-    else if (a === 'mode-simple' || a === 'mode-pro' || a === 'pro-toggle') { S.pro = a === 'mode-pro' ? true : a === 'mode-simple' ? false : !S.pro; render(); }
-    else if (a === 'copy') toast('Bank details and reference copied');
-    else if (a === 'instant') toast('In the real app, you\'d approve this in your banking app.');
-    else if (a === 'paste-addr') { S.send.addr = 'rEXAMPLEdemoAddressDoNotSend123456'; S.send.asset = 'XRP'; render(); }
-    else if (a === 'send-go') { S.send.done = true; render(); }
-    else if (a === 'send-reset') { S.send = { asset: 'XRP', addr: '', tag: '', noTag: false, who: '', name: '', test: true, done: false }; go('home'); }
-    else if (a === 'tax') toast('Statement for 1 Mar 2025 – 28 Feb 2026 sent to your email');
-  });
-  scr.addEventListener('input', e => {
-    const t = e.target;
-    if (t.id === 'amt') { S.buy.amt = t.value; paintBuy(); }
-    else if (t.id === 'saddr' || t.id === 'stag' || t.id === 'sname') {
-      const key = { saddr: 'addr', stag: 'tag', sname: 'name' }[t.id];
-      const before = sendReadyKey(); S.send[key] = t.value;
-      if (sendReadyKey() !== before) { const pos = t.selectionStart; render(); const n = document.getElementById(t.id); if (n) { n.focus(); n.setSelectionRange(pos, pos); } }
-    }
-  });
-  function sendReadyKey() { const s = S.send; return [s.addr.trim().length >= 25, !!s.tag.trim(), !!s.name.trim()].join(); }
-  scr.addEventListener('submit', e => { if (e.target.id === 'chatform') { e.preventDefault(); const i = document.getElementById('chatin'); if (i.value.trim()) chat(i.value.trim()); } });
-  const replies = [
-    'Thanks, I\'m looking at your account now. Give me a moment.',
-    'I can see your EFT from yesterday. It was matched to your account at 08:12, so you should see R1 000 in your rands balance now.',
-    'Anything else I can help with? You can rate this chat when we\'re done.',
-  ];
-  let ri = 0;
-  function chat(t) {
-    S.chat.push({ me: true, t }); render();
-    setTimeout(() => { S.chat.push({ me: false, t: replies[Math.min(ri++, replies.length - 1)] }); if (S.screen === 'help') render(); }, reduce ? 300 : 1100);
-  }
-
-  document.getElementById('tour').addEventListener('click', e => {
-    const b = e.target.closest('button[data-goto]'); if (!b) return;
-    const s = b.dataset.goto; if (s === 'welcome') S.kyc = 0;
-    if (s === 'buy') { S.buy.asset = 'BTC'; S.buy.side = 'buy'; S.buy.amt = 500; }
-    if (s === 'send') { S.send.done = false; }
-    go(s);
-    if (matchMedia('(max-width: 900px)').matches) document.querySelector('.phone').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  });
-
-  // simulated price ticks and quote lock
-  setInterval(() => {
-    Object.values(ASSETS).forEach(a => { if (a.dp > 2 || a.px > 30) { const d = (Math.random() - 0.5) * 0.002; a.px *= 1 + d; a.chg += d * 100; } });
-    if (S.screen === 'home') { const t = document.getElementById('tot'); if (t) t.textContent = R(total()); }
-    if (S.screen === 'trade') render();
-  }, 4000);
-  setInterval(() => {
-    if (S.screen !== 'buy' || S.buy.done) return;
-    S.buy.lock = S.buy.lock > 1 ? S.buy.lock - 1 : 15;
-    const n = document.getElementById('lockn'); if (n) n.textContent = S.buy.lock;
-    if (S.buy.lock === 15) paintBuy();
-  }, 1000);
-  addEventListener('resize', () => { if (S.screen === 'home') drawChart(); });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (S.screen === 'home') drawChart(); });
-  new MutationObserver(() => { if (S.screen === 'home') drawChart(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-  render();
-  if (document.fonts) document.fonts.ready.then(() => { if (S.screen === 'home') drawChart(); });
-})();
-
-// ---- feedback: compose a message and hand it to WhatsApp / email
-(() => {
-  const stars = document.getElementById('fb-stars'), statusEl = document.getElementById('fb-status'), prev = document.getElementById('fb-preview');
-  let rating = 0;
-  const v = id => document.getElementById(id).value.trim();
-  const msg = () => [
-    'eCoins Estate demo feedback',
-    'Part: ' + v('fb-area'),
-    'Rating: ' + (rating ? rating + '/5' : 'not given'),
-    'Would use it: ' + v('fb-use'),
-    v('fb-name') ? 'From: ' + v('fb-name') : '',
-    '',
-    v('fb-text') || '(no notes yet)',
-  ].filter((l, i) => l || i === 5).join('\n');
-  const update = () => { prev.textContent = msg(); };
-  stars.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; rating = +b.dataset.v; [...stars.children].forEach(c => c.setAttribute('aria-pressed', String(+c.dataset.v <= rating))); update(); });
-  document.getElementById('fb-form').addEventListener('input', update);
-  const ok = () => { if (!v('fb-text')) { statusEl.textContent = 'Write a note first.'; document.getElementById('fb-text').focus(); return false; } statusEl.textContent = ''; return true; };
-  document.getElementById('fb-form').addEventListener('submit', e => { e.preventDefault(); if (ok()) window.open('https://wa.me/?text=' + encodeURIComponent(msg()), '_blank', 'noopener'); });
-  document.getElementById('fb-mail').addEventListener('click', () => { if (ok()) location.href = 'mailto:?subject=' + encodeURIComponent('eCoins Estate demo feedback') + '&body=' + encodeURIComponent(msg()); });
-  document.getElementById('fb-copy').addEventListener('click', async () => {
-    if (!ok()) return;
-    try { await navigator.clipboard.writeText(msg()); statusEl.textContent = 'Copied. Paste it wherever you chat with the founders.'; }
-    catch (e) { const r = document.createRange(); r.selectNodeContents(prev); getSelection().removeAllRanges(); getSelection().addRange(r); statusEl.textContent = 'Press Ctrl+C (or long-press and copy) to copy the selected text.'; }
-  });
-  update();
-})();
-</script>
-<script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
-const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-mermaid.initialize({ startOnLoad: true, theme: dark ? 'dark' : 'neutral', fontFamily: 'IBM Plex Sans, sans-serif' });
-</script>
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
